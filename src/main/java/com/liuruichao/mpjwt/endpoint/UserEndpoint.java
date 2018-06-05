@@ -22,14 +22,13 @@ import javax.ws.rs.QueryParam;
  * Created on 2018/6/4 18:26
  */
 @ApplicationScoped
-@DeclareRoles({"ViewBalance", "Debtor", "Creditor", "Debtor2", "BigSpender", "*"})
+@DeclareRoles({"ViewBalance", "Debtor", "Creditor", "Debtor2", "BigSpender"})
 @Path("/user")
 public class UserEndpoint {
-    //@Inject
-    //private JsonWebToken jsonWebToken;
+    @Inject
+    private JsonWebToken jsonWebToken;
 
     @GET
-    @RolesAllowed({"*"})
     public String login(@QueryParam("username") String username, @QueryParam("password") String password) throws Exception {
         if (username.equals("liuruichao") && password.equals("liuruichao123")) {
 
@@ -43,6 +42,7 @@ public class UserEndpoint {
     @POST
     @RolesAllowed({"ViewBalance"})
     public String getBalance() {
+        System.out.println(jsonWebToken.getRawToken());
         return "100";
     }
 }
